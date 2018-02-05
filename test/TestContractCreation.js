@@ -4,13 +4,17 @@ var Keepwrite = artifacts.require("Keepwrite");
 contract('Keepwrite', function(accounts) {
   it("should create a contract and the owner is the creator account", function() {
     return Keepwrite.deployed().then(function(instance) {
-    	assert.equal(instance.getOwner(), accounts[0], "Owner should match");
+    	return instance.getOwner.call();
+    }).then(function(owner) {
+    	assert.equal(owner, accounts[0], "Owner should match");
     });
   });
   
   it("should have version 1", function() {
     return Keepwrite.deployed().then(function(instance) {
-    	assert.equal(instance.getVersion.call(accounts[0]), 1, "Version 1");
+    	return instance.getVersion.call();
+    }).then(function(version) {
+    	assert.equal(version, 1, "Version 1");
     });
   });
   
