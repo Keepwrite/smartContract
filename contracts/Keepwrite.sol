@@ -54,6 +54,13 @@ contract Keepwrite {
     } 
     
     /*
+	Get contract owner
+	*/
+	function getOwner() public constant returns (address) {
+		return owner;
+	}
+    
+    /*
 	Get contract version
 	*/
 	function getVersion() public constant returns (uint) {
