@@ -23,4 +23,12 @@ contract('Keepwrite', function(accounts) {
     });
   });
   
+  it("Unadded words do not exist", function() {
+    return Keepwrite.deployed().then(function(instance) {
+    	return instance.containsWords('e');
+    }).then(function(contains) {
+    	assert.equal(contains, false, "Words should not exist");
+    });
+  });
+  
 });
