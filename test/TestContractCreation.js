@@ -7,6 +7,13 @@ contract('Keepwrite', function(accounts) {
     	assert.equal(instance.getOwner(), accounts[0], "Owner should match");
     });
   });
+  
+  it("should have version 1", function() {
+    return Keepwrite.deployed().then(function(instance) {
+    	assert.equal(instance.getVersion.call(accounts[0]), 1, "Version 1");
+    });
+  });
+  
 });
 
 // contract('Keepwrite', function(accounts) {
