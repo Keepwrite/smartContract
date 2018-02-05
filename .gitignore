@@ -1,0 +1,15 @@
+# Mac OS X
+*.DS_Store
+
+# Python
+*.pyc
+
+*.dmg
+
+
+# Ignore these folders:
+documents
+build
+Build
+signing
+certificates
