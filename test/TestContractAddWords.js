@@ -3,7 +3,7 @@ var Keepwrite = artifacts.require("Keepwrite");
 contract('Keepwrite', function(accounts) {
   it("Adding words increases the contract balance", function() {
     return Keepwrite.deployed().then(function(instance) {
-    	instance.addWords('a', 'b', {'value': 10000});
+    	instance.addWords(guid(), guid(), {'value': 10000});
     	return instance;
     }).then(function(instance) {
     	return instance.getContractBalance.call();
@@ -13,11 +13,13 @@ contract('Keepwrite', function(accounts) {
   });
   
   it("Adding words adds to map", function() {
+  	var first = null;
     return Keepwrite.deployed().then(function(instance) {
-    	instance.addWords('c', 'd', {'value': 10000});
+    	first = guid()
+    	instance.addWords(first, guid(), {'value': 10000});
     	return instance;
     }).then(function(instance) {
-    	return instance.containsWords('c');
+    	return instance.containsWords(first);
     }).then(function(contains) {
     	assert.equal(contains, true, "Words should exist");
     });
@@ -32,3 +34,16 @@ contract('Keepwrite', function(accounts) {
   });
   
 });
+
+/**
+Create a random looking fake guid
+*/
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
+}
