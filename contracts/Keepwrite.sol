@@ -11,6 +11,7 @@ contract Keepwrite {
  	    bytes32 wordsHash;  // Words Hash
  	    bytes32 jsonHash;   // JSON Hash
  	    bool exists;        // Exists
+ 	    string wordData;	// Words
     }
 
 	// MARK:- Modifiers
@@ -110,7 +111,7 @@ contract Keepwrite {
     /*
     Add words
     */
-    function addWords(bytes32 _wordsHash, bytes32 _jsonHash) public payable {
+    function addWords(bytes32 _wordsHash, bytes32 _jsonHash, string _wordsData) public payable {
         
         // Ensure words not already created
         require(words[_wordsHash].exists == false);
@@ -118,7 +119,7 @@ contract Keepwrite {
         contractBalance += msg.value;
         
         // Create words
-        var word = Words(_wordsHash, _jsonHash, true);
+        var word = Words(_wordsHash, _jsonHash, true, _wordsData);
         words[_wordsHash] = word;
 
         WordsAdded(msg.sender, _wordsHash);
@@ -130,6 +131,22 @@ contract Keepwrite {
     function containsWords(bytes32 _wordsHash) public constant returns (bool) {
     	var word = words[_wordsHash];
         return word.exists;
+    }
+    
+    /*
+    Return the string if the string was stored, and not just the hash
+    */
+    function getWords(bytes32 _wordsHash) public constant returns (string) {
+    	var word = words[_wordsHash];
+    	
+    	// Ensure word exists
+    	require(words[_wordsHash].exists);
+    	
+        return word.wordData;
+    }
+    
+    function sayHello() public constant returns (string) {
+        return "hello";
     }
     
     function() public payable {

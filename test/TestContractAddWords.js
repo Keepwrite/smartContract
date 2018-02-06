@@ -3,7 +3,7 @@ var Keepwrite = artifacts.require("Keepwrite");
 contract('Keepwrite', function(accounts) {
   it("Adding words increases the contract balance", function() {
     return Keepwrite.deployed().then(function(instance) {
-    	instance.addWords(guid(), guid(), {'value': 10000});
+    	instance.addWords(guid(), guid(), 'c', {'value': 10000});
     	return instance;
     }).then(function(instance) {
     	return instance.getContractBalance.call();
@@ -16,7 +16,7 @@ contract('Keepwrite', function(accounts) {
   	var first = null;
     return Keepwrite.deployed().then(function(instance) {
     	first = guid()
-    	instance.addWords(first, guid(), {'value': 10000});
+    	instance.addWords(first, guid(), "c", {'value': 10000});
     	return instance;
     }).then(function(instance) {
     	return instance.containsWords(first);
